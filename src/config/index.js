@@ -27,7 +27,8 @@ const config = {
   upload: {
     dir: process.env.UPLOAD_DIR || path.join(process.cwd(), "uploads"),
     maxFileSize: Number(process.env.MAX_FILE_SIZE) || 20 * 1024 * 1024,
-    allowedTypes: (process.env.ALLOWED_FILE_TYPES || "")
+    allowedTypes: (process.env.ALLOWED_FILE_TYPES ||
+      "jpg,jpeg,png,webp,heic,heif,avif,gif,mp4,mov")
       .split(",")
       .filter(Boolean)
       .map((ext) => ext.trim().toLowerCase()),
@@ -45,6 +46,12 @@ const config = {
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
     webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     defaultPriceId: process.env.STRIPE_PRICE_ID,
+  },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    apiSecret: process.env.CLOUDINARY_API_SECRET,
+    uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
   },
   admin: {
     email: (process.env.ADMIN_EMAIL || "").toLowerCase(),

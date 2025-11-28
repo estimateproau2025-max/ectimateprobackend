@@ -1,8 +1,11 @@
 const { body, param } = require("express-validator");
+const fs = require("fs/promises");
+const path = require("path");
 const Builder = require("../models/Builder");
 const Lead = require("../models/Lead");
 const { calculateEstimate } = require("../utils/estimate");
 const config = require("../config");
+const cloudinary = require("../config/cloudinary");
 const { sendEmail } = require("../services/emailService");
 const { newLeadTemplate } = require("../utils/emailTemplates");
 
@@ -26,6 +29,55 @@ async function getSurveyMeta(req, res) {
       pricingMode: builder.pricingMode,
     },
   });
+}
+
+function normalizePhotoUrls(raw) {
+  if (!raw) return [];
+  if (Array.isArray(raw)) return raw.filter(Boolean);
+  if (typeof raw === "string") {
+    try {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed.filter(Boolean);
+      }
+    } catch (error) {
+      // ignore JSON parse error, treat as comma-delimited
+      if (raw.includes(",")) {
+        return raw
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+    }
+    return [raw];
+  }
+  return [];
+}
+
+async function uploadSurveyFiles(files = [], builderId) {
+  if (!files.length) return [];
+  const canUseCloudinary =
+    config.cloudinary.cloudName &&
+    config.cloudinary.apiKey &&
+    config.cloudinary.apiSecret;
+
+  return Promise.all(
+    files.map(async (file) => {
+      if (canUseCloudinary) {
+        try {
+          const uploadResult = await cloudinary.uploader.upload(file.path, {
+            folder: `estimate-pro/${builderId}`,
+            resource_type: "auto",
+          });
+          await fs.unlink(file.path).catch(() => {});
+          return uploadResult.secure_url;
+        } catch (error) {
+          console.error("Cloudinary upload failed", error.message);
+        }
+      }
+      return file.path.replace(`${process.cwd()}${path.sep}`, "");
+    })
+  );
 }
 
 async function submitSurvey(req, res) {
@@ -55,9 +107,9 @@ async function submitSurvey(req, res) {
     tilingLevel: payload.tilingLevel,
   });
 
-  const photoPaths = (req.files || []).map((file) =>
-    file.path.replace(`${process.cwd()}${require("path").sep}`, "")
-  );
+  const uploadedUrls = await uploadSurveyFiles(req.files || [], builder._id);
+  const directUrls = normalizePhotoUrls(req.body.photoUrls);
+  const photoPaths = [...directUrls, ...uploadedUrls].filter(Boolean);
 
   const lead = await Lead.create({
     builder: builder._id,

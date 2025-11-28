@@ -11,9 +11,17 @@ const {
 const router = express.Router();
 
 router.get("/:slug", surveySlugValidator, validateRequest, getSurveyMeta);
+function optionalUpload(req, res, next) {
+  const contentType = req.headers["content-type"] || "";
+  if (contentType.includes("multipart/form-data")) {
+    return upload.array("photos", 5)(req, res, next);
+  }
+  return next();
+}
+
 router.post(
   "/:slug",
-  upload.array("photos", 5),
+  optionalUpload,
   surveySubmissionValidators,
   validateRequest,
   submitSurvey
