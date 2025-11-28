@@ -21,9 +21,19 @@ app.use(
 );
 
 app.use(helmet());
+const allowedOrigins = new Set([
+  config.frontendUrl,
+  ...config.allowedOrigins,
+].filter(Boolean));
+
 app.use(
   cors({
-    origin: config.frontendUrl,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.has(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
     credentials: true,
   })
 );

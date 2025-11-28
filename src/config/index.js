@@ -9,6 +9,10 @@ const config = {
   databaseUrl:
     process.env.DATABASE_URL || "mongodb+srv://ehteshambutt58:4G9PFxLyIR6PqGLn@cluster0.mw68zmh.mongodb.net/number_discussion?retryWrites=true&w=majority",
   frontendUrl: process.env.FRONTEND_URL || "http://localhost:5173",
+  allowedOrigins: (process.env.CORS_ALLOW_ORIGINS || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean),
   jwt: {
     accessTokenSecret:
       process.env.ACCESS_TOKEN_SECRET || "development_access_secret",
