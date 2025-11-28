@@ -384,11 +384,11 @@ async function createDummyData() {
     console.log("\nBuilder 1 (Active Trial):");
     console.log(`  Email: dummy.builder1@test.com`);
     console.log(`  Password: Test123!`);
-    console.log(`  Survey Link: http://localhost:5173/survey/${builder1.surveySlug}`);
+    console.log(`  Survey Link: https://estimate-pro-chi.vercel.app/survey/${builder1.surveySlug}`);
     console.log("\nBuilder 2 (Active Subscription):");
     console.log(`  Email: dummy.builder2@test.com`);
     console.log(`  Password: Test123!`);
-    console.log(`  Survey Link: http://localhost:5173/survey/${builder2.surveySlug}`);
+    console.log(`  Survey Link: https://estimate-pro-chi.vercel.app/survey/${builder2.surveySlug}`);
     console.log("\nBuilder 3 (Expired Trial):");
     console.log(`  Email: dummy.builder3@test.com`);
     console.log(`  Password: Test123!`);

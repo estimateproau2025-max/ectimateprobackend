@@ -2,8 +2,8 @@ const axios = require("axios");
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
-const API_BASE = process.env.API_BASE || "http://esitmatebackend.vercel.app/api";
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const API_BASE = process.env.API_BASE || "https://esitmatebackend.vercel.app/api";
+const FRONTEND_URL = process.env.FRONTEND_URL || "https://estimate-pro-chi.vercel.app";
 
 let testResults = {
   passed: 0,

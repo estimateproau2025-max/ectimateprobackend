@@ -70,7 +70,7 @@ This will test:
 ### 1. Free Trial & Subscription Logic
 
 - [ ] **Sign up new builder**
-  - Go to `http://localhost:5173/auth`
+  - Go to `https://estimate-pro-chi.vercel.app/auth`
   - Sign up with a new email
   - Verify: Account created with 3-month trial
   - Verify: No payment method required
