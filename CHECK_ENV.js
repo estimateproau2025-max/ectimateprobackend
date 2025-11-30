@@ -32,3 +32,4 @@ if (!config.stripe.secretKey) {
 console.log('✅ All required environment variables are set!\n');
 
 
+
