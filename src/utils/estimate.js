@@ -45,46 +45,41 @@ function normaliseApplicability(applicability = "") {
 
 function shouldIncludeItem(item, payload = {}) {
   const applicability = normaliseApplicability(item.applicability);
-  
+
   if (applicability === "all") return true;
-  
+
   const bathroomType = (payload.bathroomType || "").toLowerCase();
   const tilingLevel = (payload.tilingLevel || "").toLowerCase();
-  
+  const toiletMove = payload.toiletMove;
+  const wallChange = payload.wallChange;
+  const includeTiles = payload.includeTiles;
+
   // Check conditional logic
   if (applicability === "same_layout") {
-    // For now, assume included if not explicitly changed
-    // In future, add toiletLayout field to survey
-    return true; // Default to include
+    return toiletMove !== "move";
   }
-  
+
   if (applicability === "layout_change") {
-    // For now, assume not included unless specified
-    // In future, add toiletLayout field to survey
-    return false; // Default to exclude
+    return toiletMove === "move";
   }
-  
+
   if (applicability === "tiles_yes") {
-    // For now, assume included if tiling level is selected
-    // In future, add tilesMaterial field to survey
-    return !!tilingLevel;
+    return includeTiles === "yes";
   }
-  
+
   if (applicability === "apartment") {
     return bathroomType === "apartment";
   }
-  
+
   if (applicability === "wall_change") {
-    // For now, assume not included unless specified
-    // In future, add wallLayoutChange field to survey
-    return false; // Default to exclude
+    return wallChange === "yes";
   }
-  
+
   // Check tiling level match
   if (tilingLevels.map((lvl) => lvl.toLowerCase()).includes(applicability)) {
     return tilingLevel === applicability;
   }
-  
+
   return true; // Default to include if unclear
 }
 
@@ -94,20 +89,26 @@ function selectAreaForItem(item, areas, tiledAreas, tilingLevel) {
   }
 
   const normalised = normaliseApplicability(item.applicability);
-  
+  const itemName = (item.itemName || "").toLowerCase();
+
   // For tiling-related items, use tiled area based on tiling level
-  if (item.itemName && item.itemName.toLowerCase().includes("tiling")) {
+  if (itemName.includes("tiling") || itemName.includes("tiles")) {
     const tilingKey = `${tilingLevel.toLowerCase()}Area`;
-    return tiledAreas[tilingKey] || areas.floorArea;
+    return tiledAreas[tilingKey] || areas.totalArea;
   }
-  
+
+  // For items that specify "per m²" but aren't tiling-related, use total area
+  if (item.priceType === "sqm") {
+    return areas.totalArea || areas.floorArea;
+  }
+
   if (normalised === "all") {
     return areas.totalArea || areas.floorArea;
   }
 
   if (tilingLevels.map((lvl) => lvl.toLowerCase()).includes(normalised)) {
     const key = `${normalised}Area`;
-    return tiledAreas[key] || areas.floorArea;
+    return tiledAreas[key] || areas.totalArea;
   }
 
   return areas.totalArea || areas.floorArea;
@@ -163,30 +164,26 @@ function calculateEstimate(pricingItems = [], payload = {}) {
     });
 
   // Second pass: calculate percentage-based items
-  const percentageLineItems = [];
-  let currentSubtotal = subtotalBeforePercentages;
-
-  pricingItems
+  const percentageLineItems = pricingItems
     .filter((item) => item.isActive !== false && item.priceType === "percentage")
-    .forEach((item) => {
+    .map((item) => {
       if (!shouldIncludeItem(item, payload)) {
-        return;
+        return null;
       }
 
-      const percentage = Number(item.finalPrice || item.baseCost || 0);
-      const amount = (currentSubtotal * percentage) / 100;
+      const percentage = Number(item.markupPercent || item.finalPrice || item.baseCost || 0);
+      const amount = (subtotalBeforePercentages * percentage) / 100;
 
-      percentageLineItems.push({
+      return {
         itemName: item.itemName,
         applicability: item.applicability,
         priceType: "percentage",
         quantity: 1,
         unitPrice: Number(percentage.toFixed(2)),
         total: Number(amount.toFixed(2)),
-      });
-
-      currentSubtotal += amount;
-    });
+      };
+    })
+    .filter(Boolean);
 
   // Combine all line items
   const allLineItems = [...regularLineItems, ...percentageLineItems];

@@ -11,7 +11,7 @@ const pricingValidators = [
   body("pricingMode").optional().isIn(["final", "base"]),
   body("pricingItems").isArray(),
   body("pricingItems.*.itemName").notEmpty(),
-  body("pricingItems.*.priceType").isIn(["sqm", "fixed"]),
+  body("pricingItems.*.priceType").isIn(["sqm", "fixed", "percentage"]),
   body("pricingItems.*.finalPrice").optional().isFloat({ min: 0 }),
   body("pricingItems.*.baseCost").optional().isFloat({ min: 0 }),
   body("pricingItems.*.markupPercent").optional().isFloat({ min: 0 }),

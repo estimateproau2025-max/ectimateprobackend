@@ -105,6 +105,10 @@ async function submitSurvey(req, res) {
   const estimate = calculateEstimate(builder.pricingItems, {
     measurements: payload.measurements,
     tilingLevel: payload.tilingLevel,
+    bathroomType: payload.bathroomType,
+    toiletMove: req.body.toiletMove,
+    wallChange: req.body.wallChange,
+    includeTiles: req.body.includeTiles,
   });
 
   const uploadedUrls = await uploadSurveyFiles(req.files || [], builder._id);
