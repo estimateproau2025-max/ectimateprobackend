@@ -12,8 +12,12 @@ const LeadSchema = new mongoose.Schema(
     clientName: { type: String, required: true },
     clientPhone: { type: String },
     clientEmail: { type: String },
+    clientSuburb: { type: String },
     bathroomType: { type: String },
     tilingLevel: { type: String },
+    tilesSupply: { type: String },
+    toiletLocation: { type: String },
+    wallChanges: { type: String },
     designStyle: { type: String },
     homeAgeCategory: { type: String },
     measurements: {

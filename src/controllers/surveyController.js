@@ -90,8 +90,12 @@ async function submitSurvey(req, res) {
     clientName: req.body.clientName,
     clientPhone: req.body.clientPhone,
     clientEmail: req.body.clientEmail,
+    clientSuburb: req.body.clientSuburb,
     bathroomType: req.body.bathroomType,
     tilingLevel: req.body.tilingLevel,
+    tilesSupply: req.body.tilesSupply,
+    toiletLocation: req.body.toiletLocation,
+    wallChanges: req.body.wallChanges,
     designStyle: req.body.designStyle,
     homeAgeCategory: req.body.homeAgeCategory,
     measurements: {
@@ -102,13 +106,18 @@ async function submitSurvey(req, res) {
     },
   };
 
+  // Map frontend field names to backend expected names
+  const toiletMove = req.body.toiletLocation === "change_location" ? true : false;
+  const wallChange = req.body.wallChanges === "yes" ? true : false;
+  const includeTiles = req.body.tilesSupply === "yes_include" ? true : false;
+
   const estimate = calculateEstimate(builder.pricingItems, {
     measurements: payload.measurements,
     tilingLevel: payload.tilingLevel,
     bathroomType: payload.bathroomType,
-    toiletMove: req.body.toiletMove,
-    wallChange: req.body.wallChange,
-    includeTiles: req.body.includeTiles,
+    toiletMove: toiletMove,
+    wallChange: wallChange,
+    includeTiles: includeTiles,
   });
 
   const uploadedUrls = await uploadSurveyFiles(req.files || [], builder._id);
