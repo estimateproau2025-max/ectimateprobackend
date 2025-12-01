@@ -242,7 +242,7 @@ async function runTests() {
       tilingLevel: "Standard",
     });
     logTest("Estimate calculation", !!estimate.baseEstimate);
-    logTest("High estimate calculated", estimate.highEstimate === estimate.baseEstimate * 1.35);
+    logTest("High estimate calculated", estimate.highEstimate === estimate.baseEstimate * 1.30);
     logTest("Line items generated", estimate.lineItems.length > 0);
     logTest("Areas calculated", !!estimate.areas.floorArea);
     logTest("Tiled areas calculated", !!estimate.tiledAreas.standardArea);

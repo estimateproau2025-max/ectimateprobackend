@@ -188,7 +188,7 @@ This will test:
   - Submit survey with Standard tiling
   - Verify in lead detail:
     - Base estimate calculated
-    - High estimate = base × 1.35
+    - High estimate = base × 1.30
     - Line items show correct calculations
     - Fixed items included
     - Per m² items use correct area

@@ -56,23 +56,23 @@ function shouldIncludeItem(item, payload = {}) {
 
   // Check conditional logic
   if (applicability === "same_layout") {
-    return toiletMove !== "move";
+    return toiletMove === false || toiletMove === "same_location";
   }
 
   if (applicability === "layout_change") {
-    return toiletMove === "move";
+    return toiletMove === true || toiletMove === "change_location";
   }
 
   if (applicability === "tiles_yes") {
-    return includeTiles === "yes";
+    return includeTiles === true || includeTiles === "yes_include";
   }
 
   if (applicability === "apartment") {
-    return bathroomType === "apartment";
+    return bathroomType === "apartment" || (bathroomType && bathroomType.toLowerCase().includes("apartment"));
   }
 
   if (applicability === "wall_change") {
-    return wallChange === "yes";
+    return wallChange === true || wallChange === "yes";
   }
 
   // Check tiling level match
@@ -188,7 +188,7 @@ function calculateEstimate(pricingItems = [], payload = {}) {
   // Combine all line items
   const allLineItems = [...regularLineItems, ...percentageLineItems];
   const baseEstimate = allLineItems.reduce((acc, curr) => acc + curr.total, 0);
-  const highEstimate = baseEstimate * 1.35;
+  const highEstimate = baseEstimate * 1.30;
 
   return {
     areas,

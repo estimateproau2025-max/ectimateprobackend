@@ -75,7 +75,7 @@ All pricing items from the Excel prototype are supported:
 5. First pass: Calculate all non-percentage items
 6. Second pass: Calculate percentage items on subtotal
 7. Sum all line items = `base_estimate`
-8. `high_estimate = base_estimate × 1.35`
+8. `high_estimate = base_estimate × 1.30`
 
 ## Testing Tools Created
 

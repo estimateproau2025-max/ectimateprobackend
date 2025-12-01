@@ -186,7 +186,7 @@
   - Formula: `base_estimate = ∑ (line-item totals)`
   
 - [x] **High estimate** - ✅ IMPLEMENTED
-  - Formula: `high_estimate = base_estimate × 1.35`
+  - Formula: `high_estimate = base_estimate × 1.30`
   
 - [x] **Store on lead** - ✅ IMPLEMENTED
   - Location: `src/models/Lead.js:estimate`
