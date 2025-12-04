@@ -93,8 +93,23 @@ function selectAreaForItem(item, areas, tiledAreas, tilingLevel) {
 
   // For tiling-related items, use tiled area based on tiling level
   if (itemName.includes("tiling") || itemName.includes("tiles")) {
-    const tilingKey = `${tilingLevel.toLowerCase()}Area`;
-    return tiledAreas[tilingKey] || areas.totalArea;
+    // Normalize tiling level to match the keys in tiledAreas
+    const normalizedTilingLevel = (tilingLevel || "Standard").toLowerCase();
+    
+    // Map tiling level to the correct area key
+    let areaKey;
+    if (normalizedTilingLevel === "budget") {
+      areaKey = "budgetArea";
+    } else if (normalizedTilingLevel === "standard") {
+      areaKey = "standardArea";
+    } else if (normalizedTilingLevel === "premium") {
+      areaKey = "premiumArea";
+    } else {
+      // Default to standard if unknown
+      areaKey = "standardArea";
+    }
+    
+    return tiledAreas[areaKey] || areas.totalArea;
   }
 
   // For items that specify "per m²" but aren't tiling-related, use total area
