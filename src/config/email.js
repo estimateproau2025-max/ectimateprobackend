@@ -1,15 +1,27 @@
 const nodemailer = require("nodemailer");
 const config = require("./index");
 
-const transporter = nodemailer.createTransport({
-  host: config.email.host,
-  port: config.email.port,
-  secure: config.email.port === 465,
-  auth: {
-    user: config.email.user,
-    pass: config.email.pass,
-  },
-});
+// If service is provided (e.g., 'gmail'), use service-based config
+// Otherwise, use host/port configuration
+const transporterConfig = config.email.service
+  ? {
+      service: config.email.service,
+      auth: {
+        user: config.email.user,
+        pass: config.email.pass,
+      },
+    }
+  : {
+      host: config.email.host,
+      port: config.email.port,
+      secure: config.email.port === 465,
+      auth: {
+        user: config.email.user,
+        pass: config.email.pass,
+      },
+    };
+
+const transporter = nodemailer.createTransport(transporterConfig);
 
 async function verifyEmailTransport() {
   try {

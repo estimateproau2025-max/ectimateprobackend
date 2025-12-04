@@ -22,6 +22,7 @@ const BuilderSchema = new mongoose.Schema(
     contactName: { type: String },
     email: { type: String, required: true, unique: true, lowercase: true },
     phone: { type: String },
+    abn: { type: String },
     password: { type: String, required: true },
     role: { type: String, enum: ["builder", "admin"], default: "builder" },
     surveySlug: { type: String, unique: true },

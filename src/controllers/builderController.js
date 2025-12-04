@@ -5,6 +5,7 @@ const Builder = require("../models/Builder");
 const updateProfileValidators = [
   body("businessName").optional().notEmpty(),
   body("phone").optional().isString(),
+  body("abn").optional().isString(),
 ];
 
 const pricingValidators = [
@@ -23,6 +24,7 @@ function formatBuilder(builder) {
     businessName: builder.businessName,
     contactName: builder.contactName,
     phone: builder.phone,
+    abn: builder.abn,
     email: builder.email,
     role: builder.role,
     surveySlug: builder.surveySlug,
@@ -38,10 +40,11 @@ async function getProfile(req, res) {
 }
 
 async function updateProfile(req, res) {
-  const { businessName, phone, contactName } = req.body;
+  const { businessName, phone, contactName, abn } = req.body;
   if (businessName) req.user.businessName = businessName;
   if (phone) req.user.phone = phone;
   if (contactName) req.user.contactName = contactName;
+  if (abn !== undefined) req.user.abn = abn || null;
   await req.user.save();
   res.json({ builder: formatBuilder(req.user) });
 }
