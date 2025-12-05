@@ -144,12 +144,18 @@ async function submitSurvey(req, res) {
 
   if (builder.notifications.leadEmails) {
     try {
+      const frontendBase =
+        (config.frontendUrl || "https://estimate-pro-chi.vercel.app").replace(
+          /\/+$/,
+          ""
+        );
+      const dashboardUrl = `${frontendBase}/dashboard/leads/${lead._id}`;
       await sendEmail({
         to: builder.email,
         ...newLeadTemplate({
           builderName: builder.businessName,
           clientName: lead.clientName,
-          dashboardUrl: `${config.frontendUrl}/dashboard/leads/${lead._id}`,
+          dashboardUrl,
         }),
       });
     } catch (error) {

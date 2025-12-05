@@ -45,6 +45,7 @@ function normaliseApplicability(applicability = "") {
 
 function shouldIncludeItem(item, payload = {}) {
   const applicability = normaliseApplicability(item.applicability);
+  const itemName = (item.itemName || "").toLowerCase();
 
   if (applicability === "all") return true;
 
@@ -53,6 +54,15 @@ function shouldIncludeItem(item, payload = {}) {
   const toiletMove = payload.toiletMove;
   const wallChange = payload.wallChange;
   const includeTiles = payload.includeTiles;
+
+  // Hard guard for wall knock/shift items even if applicability is misconfigured
+  if (
+    itemName.includes("wall knock") ||
+    itemName.includes("wall shift") ||
+    itemName.includes("knock/shift")
+  ) {
+    return wallChange === true || wallChange === "yes";
+  }
 
   // Check conditional logic
   if (applicability === "same_layout") {

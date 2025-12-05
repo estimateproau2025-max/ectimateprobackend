@@ -23,6 +23,7 @@ const BuilderSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, lowercase: true },
     phone: { type: String },
     abn: { type: String },
+    quoteTerms: { type: String, default: "" },
     password: { type: String, required: true },
     role: { type: String, enum: ["builder", "admin"], default: "builder" },
     surveySlug: { type: String, unique: true },

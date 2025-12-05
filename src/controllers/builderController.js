@@ -6,6 +6,7 @@ const updateProfileValidators = [
   body("businessName").optional().notEmpty(),
   body("phone").optional().isString(),
   body("abn").optional().isString(),
+  body("quoteTerms").optional().isString(),
 ];
 
 const pricingValidators = [
@@ -25,6 +26,7 @@ function formatBuilder(builder) {
     contactName: builder.contactName,
     phone: builder.phone,
     abn: builder.abn,
+    quoteTerms: builder.quoteTerms,
     email: builder.email,
     role: builder.role,
     surveySlug: builder.surveySlug,
@@ -40,11 +42,12 @@ async function getProfile(req, res) {
 }
 
 async function updateProfile(req, res) {
-  const { businessName, phone, contactName, abn } = req.body;
+  const { businessName, phone, contactName, abn, quoteTerms } = req.body;
   if (businessName) req.user.businessName = businessName;
   if (phone) req.user.phone = phone;
   if (contactName) req.user.contactName = contactName;
   if (abn !== undefined) req.user.abn = abn || null;
+  if (quoteTerms !== undefined) req.user.quoteTerms = quoteTerms || "";
   await req.user.save();
   res.json({ builder: formatBuilder(req.user) });
 }

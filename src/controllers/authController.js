@@ -40,6 +40,8 @@ function mapBuilderResponse(builder) {
     contactName: builder.contactName,
     email: builder.email,
     phone: builder.phone,
+    abn: builder.abn,
+    quoteTerms: builder.quoteTerms,
     role: builder.role,
     surveySlug: builder.surveySlug,
     trialEndsAt: builder.trialEndsAt,
