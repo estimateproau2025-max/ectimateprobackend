@@ -149,7 +149,7 @@ async function submitSurvey(req, res) {
           /\/+$/,
           ""
         );
-      const dashboardUrl = `${'https://estimate-pro-chi.vercel.app/'}/dashboard/leads/${lead._id}`;
+      const dashboardUrl = `${frontendBase}/dashboard/leads/${lead._id}`;
       await sendEmail({
         to: builder.email,
         ...newLeadTemplate({
