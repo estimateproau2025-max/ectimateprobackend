@@ -8,7 +8,11 @@ const config = {
   port: process.env.PORT || 5000,
   databaseUrl:
     process.env.DATABASE_URL || "mongodb+srv://ehteshambutt58:4G9PFxLyIR6PqGLn@cluster0.mw68zmh.mongodb.net/number_discussion?retryWrites=true&w=majority",
-  frontendUrl: process.env.FRONTEND_URL || "https://estimate-pro-chi.vercel.app",
+  frontendUrl:
+    process.env.FRONTEND_URL ||
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://estimate-pro-chi.vercel.app"),
   allowedOrigins: (
     process.env.CORS_ALLOW_ORIGINS ||
     "http://localhost:5173,https://estimate-pro-chi.vercel.app"
