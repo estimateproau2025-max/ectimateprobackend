@@ -144,15 +144,9 @@ async function submitSurvey(req, res) {
 
   if (builder.notifications.leadEmails) {
     try {
-      const frontendBase =
-        (config.frontendUrl || "https://estimate-pro-chi.vercel.app").replace(
-          /\/+$/,
-          ""
-        );
-      const logoUrl = `${frontendBase}/${encodeURIComponent(
-        "WhatsApp Image 2025-11-30 at 12.32.55 AM.jpeg"
-      )}`;
-      const dashboardUrl = `${frontendBase}/dashboard/leads/${lead._id}`;
+      const frontendBase = (config.frontendUrl || "").replace(/\/+$/, "");
+      const dashboardUrl = `${frontendBase || "https://estimate-pro-chi.vercel.app"}/dashboard/leads/${lead._id}`;
+      const logoUrl = config.email.logoUrl || undefined;
       await sendEmail({
         to: builder.email,
         ...newLeadTemplate({

@@ -44,6 +44,7 @@ const config = {
     pass: process.env.EMAIL_PASSWORD,
     from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
     service: process.env.SERVICE,
+    logoUrl: process.env.EMAIL_LOGO_URL, // publicly accessible URL for email footer logo
   },
   stripe: {
     secretKey: process.env.STRIPE_SECRET_KEY,
