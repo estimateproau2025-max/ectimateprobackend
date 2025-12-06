@@ -20,13 +20,18 @@ function trialExpiredTemplate({ businessName, frontendUrl }) {
   };
 }
 
-function newLeadTemplate({ builderName, clientName, dashboardUrl }) {
+function newLeadTemplate({ builderName, clientName, dashboardUrl, logoUrl }) {
   return {
     subject: `New client submission from ${clientName}`,
     html: `<p>Hi ${builderName || "there"},</p>
       <p>You have a new client survey submission.</p>
       <p><a href="${dashboardUrl}" target="_blank">View the lead in your dashboard</a></p>
-      <p>Thanks,<br/>EstiMate Pro</p>`,
+      <p>Thanks,<br/>EstiMate Pro</p>
+      ${
+        logoUrl
+          ? `<p style="margin-top: 16px;"><img src="${logoUrl}" alt="EstiMate Pro" style="max-width: 180px; height: auto;" /></p>`
+          : ""
+      }`,
   };
 }
 

@@ -149,13 +149,17 @@ async function submitSurvey(req, res) {
           /\/+$/,
           ""
         );
-      const dashboardUrl = `${'https://estimate-pro-chi.vercel.app'}/dashboard/leads/${lead._id}`;
+      const logoUrl = `${frontendBase}/${encodeURIComponent(
+        "WhatsApp Image 2025-11-30 at 12.32.55 AM.jpeg"
+      )}`;
+      const dashboardUrl = `${frontendBase}/dashboard/leads/${lead._id}`;
       await sendEmail({
         to: builder.email,
         ...newLeadTemplate({
           builderName: builder.businessName,
           clientName: lead.clientName,
           dashboardUrl,
+          logoUrl,
         }),
       });
     } catch (error) {
