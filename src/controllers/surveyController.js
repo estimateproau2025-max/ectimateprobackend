@@ -146,7 +146,9 @@ async function submitSurvey(req, res) {
     try {
       const frontendBase = (config.frontendUrl || "").replace(/\/+$/, "");
       const dashboardUrl = `${frontendBase || "https://estimate-pro-chi.vercel.app"}/dashboard/leads/${lead._id}`;
-      const logoUrl = config.email.logoUrl || undefined;
+      const defaultLogo =
+        "https://res.cloudinary.com/dgmjg9zr4/image/upload/v1765026255/WhatsApp_Image_2025-11-30_at_12.32.55_AM_gbr49i.jpg";
+      const logoUrl = config.email.logoUrl || defaultLogo;
       await sendEmail({
         to: builder.email,
         ...newLeadTemplate({
