@@ -54,6 +54,7 @@ function shouldIncludeItem(item, payload = {}) {
   const toiletMove = payload.toiletMove;
   const wallChange = payload.wallChange;
   const includeTiles = payload.includeTiles;
+  const wallChangeOn = wallChange === true || wallChange === "yes";
 
   // Hard guard for wall knock/shift items even if applicability is misconfigured
   if (
@@ -61,7 +62,12 @@ function shouldIncludeItem(item, payload = {}) {
     itemName.includes("wall shift") ||
     itemName.includes("knock/shift")
   ) {
-    return wallChange === true || wallChange === "yes";
+    return wallChangeOn;
+  }
+
+  // Also guard any wall-change applicability when the user said "No"
+  if (applicability === "wall_change") {
+    return wallChangeOn;
   }
 
   // Check conditional logic
@@ -79,10 +85,6 @@ function shouldIncludeItem(item, payload = {}) {
 
   if (applicability === "apartment") {
     return bathroomType === "apartment" || (bathroomType && bathroomType.toLowerCase().includes("apartment"));
-  }
-
-  if (applicability === "wall_change") {
-    return wallChange === true || wallChange === "yes";
   }
 
   // Check tiling level match
