@@ -44,7 +44,10 @@ const config = {
     pass: process.env.EMAIL_PASSWORD,
     from: process.env.EMAIL_FROM || process.env.EMAIL_USER,
     service: process.env.SERVICE,
-    logoUrl: process.env.EMAIL_LOGO_URL, // publicly accessible URL for email footer logo
+    // Publicly accessible URL for the email footer logo; fall back to the provided Cloudinary asset
+    logoUrl:
+      process.env.EMAIL_LOGO_URL ||
+      "https://res.cloudinary.com/dgmjg9zr4/image/upload/v1765026255/WhatsApp_Image_2025-11-30_at_12.32.55_AM_gbr49i.jpg",
   },
   stripe: {
     secretKey: process.env.STRIPE_SECRET_KEY,
