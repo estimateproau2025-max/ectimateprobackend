@@ -4,10 +4,12 @@ const ensureSubscriptionActive = require("../middleware/subscriptionGuard");
 const validateRequest = require("../middleware/validateRequest");
 const {
   statusUpdateValidators,
+  notesUpdateValidators,
   leadQueryValidators,
   listLeads,
   getLead,
   updateStatus,
+  updateNotes,
   deleteLead,
 } = require("../controllers/leadController");
 
@@ -22,6 +24,12 @@ router.patch(
   statusUpdateValidators,
   validateRequest,
   updateStatus
+);
+router.patch(
+  "/:id/notes",
+  notesUpdateValidators,
+  validateRequest,
+  updateNotes
 );
 router.delete("/:id", deleteLead);
 

@@ -51,6 +51,7 @@ const LeadSchema = new mongoose.Schema(
     answers: mongoose.Schema.Types.Mixed,
     photoPaths: [String],
     status: { type: String, enum: leadStatuses, default: "New" },
+    notes: { type: String, default: "" },
     submittedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }

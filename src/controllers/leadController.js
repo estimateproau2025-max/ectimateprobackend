@@ -7,6 +7,11 @@ const statusUpdateValidators = [
   body("status").isIn(leadStatuses),
 ];
 
+const notesUpdateValidators = [
+  param("id").isMongoId(),
+  body("notes").isString().trim().isLength({ min: 0, max: 5000 }),
+];
+
 const leadQueryValidators = [
   query("status").optional().isIn(leadStatuses),
 ];
@@ -46,6 +51,19 @@ async function updateStatus(req, res) {
   res.json({ lead });
 }
 
+async function updateNotes(req, res) {
+  const lead = await Lead.findOne({
+    _id: req.params.id,
+    builder: req.user._id,
+  });
+  if (!lead) {
+    return res.status(404).json({ message: "Lead not found" });
+  }
+  lead.notes = req.body.notes || "";
+  await lead.save();
+  res.json({ lead });
+}
+
 async function listAllLeads(req, res) {
   const leads = await Lead.find()
     .populate("builder", "businessName email")
@@ -67,10 +85,12 @@ async function deleteLead(req, res) {
 
 module.exports = {
   statusUpdateValidators,
+  notesUpdateValidators,
   leadQueryValidators,
   listLeads,
   getLead,
   updateStatus,
+  updateNotes,
   listAllLeads,
   deleteLead,
 };
