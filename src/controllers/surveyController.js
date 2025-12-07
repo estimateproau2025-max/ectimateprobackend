@@ -134,6 +134,8 @@ async function submitSurvey(req, res) {
       ...estimate.tiledAreas,
     },
     estimate: {
+      subtotal: estimate.subtotal,
+      percentageTotal: estimate.percentageTotal,
       baseEstimate: estimate.baseEstimate,
       highEstimate: estimate.highEstimate,
       lineItems: estimate.lineItems,

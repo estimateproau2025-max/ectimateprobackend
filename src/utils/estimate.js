@@ -214,13 +214,19 @@ function calculateEstimate(pricingItems = [], payload = {}) {
 
   // Combine all line items
   const allLineItems = [...regularLineItems, ...percentageLineItems];
-  const baseEstimate = allLineItems.reduce((acc, curr) => acc + curr.total, 0);
+  const percentageTotal = percentageLineItems.reduce(
+    (sum, item) => sum + item.total,
+    0
+  );
+  const baseEstimate = subtotalBeforePercentages + percentageTotal;
   const highEstimate = baseEstimate * 1.30;
 
   return {
     areas,
     tiledAreas,
     lineItems: allLineItems,
+    subtotal: Number(subtotalBeforePercentages.toFixed(2)),
+    percentageTotal: Number(percentageTotal.toFixed(2)),
     baseEstimate: Number(baseEstimate.toFixed(2)),
     highEstimate: Number(highEstimate.toFixed(2)),
   };
