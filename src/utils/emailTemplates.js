@@ -29,7 +29,7 @@ function newLeadTemplate({ builderName, clientName, dashboardUrl, logoUrl }) {
       <p>Thanks,<br/>EstiMate Pro</p>
       ${
         logoUrl
-          ? `<p style="margin-top: 16px;"><img src="${logoUrl}" alt="EstiMate Pro" style="max-width: 180px; height: auto;" /></p>`
+          ? `<p style="margin-top: 16px;"><img src="${logoUrl}" alt="EstiMate Pro" style="max-width: 140px; width: 140px; height: auto;" /></p>`
           : ""
       }`,
   };
