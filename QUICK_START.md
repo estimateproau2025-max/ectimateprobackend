@@ -39,7 +39,7 @@ npm run test-features
 After running `create-dummy-data`, use these accounts:
 
 ### Admin
-- **Email**: `admin@estimatepro.com` (or your `ADMIN_EMAIL`)
+- **Email**: `estimateproau2025@gmail.com` (or your `ADMIN_EMAIL`)
 - **Password**: `Admin123!`
 
 ### Builder 1 (Active Trial - 2 months left)

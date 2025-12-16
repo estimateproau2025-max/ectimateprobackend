@@ -188,7 +188,7 @@ async function runTests() {
 
   // Test 8: Admin Dashboard
   console.log("\n📋 Test 8: Admin Dashboard");
-  const adminEmail = process.env.ADMIN_EMAIL || "estimateproau2025@gmail.com";
+  const adminEmail =  "estimateproau2025@gmail.com";
   const adminLogin = await testAPI("/auth/v1/token", "POST", {
     email: adminEmail,
     password: "Admin123!",

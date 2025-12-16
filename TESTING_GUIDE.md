@@ -25,7 +25,7 @@ This will create:
 ### Test Accounts Created:
 
 1. **Admin**:
-   - Email: `admin@estimatepro.com` (or your `ADMIN_EMAIL`)
+   - Email: `estimateproau2025@gmail.com` (or your `ADMIN_EMAIL`)
    - Password: `Admin123!`
 
 2. **Builder 1 (Active Trial)**:
@@ -225,7 +225,7 @@ This will test:
 ### 7. Admin Dashboard
 
 - [ ] **Access Admin Dashboard**
-  - Login as admin (`admin@estimatepro.com`)
+  - Login as admin (`estimateproau2025@gmail.com`)
   - Verify: Admin link in sidebar
   - Go to Admin Dashboard
   - Verify: Summary stats shown

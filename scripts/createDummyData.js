@@ -139,7 +139,7 @@ async function createDummyData() {
     // console.log("🧹 Cleared existing dummy data");
 
     // Create Admin Builder
-    const adminEmail = process.env.ADMIN_EMAIL || "admin@estimatepro.com";
+    const adminEmail = "estimateproau2025@gmail.com";
     let adminBuilder = await Builder.findOne({ email: adminEmail });
     if (!adminBuilder) {
       adminBuilder = await Builder.create({
