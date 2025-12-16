@@ -191,7 +191,7 @@ async function runTests() {
   const adminEmail =  "estimateproau2025@gmail.com";
   const adminLogin = await testAPI("/auth/v1/token", "POST", {
     email: adminEmail,
-    password: "Admin123!",
+    password: "123456789",
     grant_type: "password",
   });
   if (adminLogin.success && adminLogin.data?.access_token) {

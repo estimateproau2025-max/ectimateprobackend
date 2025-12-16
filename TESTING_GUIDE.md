@@ -26,7 +26,7 @@ This will create:
 
 1. **Admin**:
    - Email: `estimateproau2025@gmail.com` (or your `ADMIN_EMAIL`)
-   - Password: `Admin123!`
+   - Password: `123456789`
 
 2. **Builder 1 (Active Trial)**:
    - Email: `dummy.builder1@test.com`

@@ -147,7 +147,7 @@ async function createDummyData() {
         contactName: "Admin User",
         email: adminEmail,
         phone: "+61 400 000 000",
-        password: "Admin123!",
+        password: "123456789",
         role: "admin",
         pricingItems: defaultPricingItems,
         pricingMode: "final",
@@ -380,7 +380,7 @@ async function createDummyData() {
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     console.log("Admin:");
     console.log(`  Email: ${adminEmail}`);
-    console.log(`  Password: Admin123!`);
+    console.log(`  Password: 123456789`);
     console.log("\nBuilder 1 (Active Trial):");
     console.log(`  Email: dummy.builder1@test.com`);
     console.log(`  Password: Test123!`);

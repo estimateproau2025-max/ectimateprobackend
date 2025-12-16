@@ -40,7 +40,7 @@ After running `create-dummy-data`, use these accounts:
 
 ### Admin
 - **Email**: `estimateproau2025@gmail.com` (or your `ADMIN_EMAIL`)
-- **Password**: `Admin123!`
+- **Password**: `123456789`
 
 ### Builder 1 (Active Trial - 2 months left)
 - **Email**: `dummy.builder1@test.com`
