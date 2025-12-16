@@ -6,7 +6,13 @@ const {
   getSummary,
   toggleBuilderAccess,
 } = require("../controllers/adminController");
-const { getAllBuilders } = require("../controllers/builderController");
+const {
+  getAllBuilders,
+  adminGetBuilder,
+  adminGetPricing,
+  adminUpdatePricing,
+  adminPricingValidators,
+} = require("../controllers/builderController");
 const { listAllLeads } = require("../controllers/leadController");
 
 const router = express.Router();
@@ -15,6 +21,14 @@ router.use(authenticate, authorize(["admin"]));
 
 router.get("/summary", getSummary);
 router.get("/builders", getAllBuilders);
+router.get("/builders/:id", adminGetBuilder);
+router.get("/builders/:id/pricing", adminGetPricing);
+router.put(
+  "/builders/:id/pricing",
+  adminPricingValidators,
+  validateRequest,
+  adminUpdatePricing
+);
 router.get("/leads", listAllLeads);
 router.patch(
   "/builders/:id/access",

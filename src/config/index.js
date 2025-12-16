@@ -64,7 +64,8 @@ const config = {
     uploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
   },
   admin: {
-    email: (process.env.ADMIN_EMAIL || "").toLowerCase(),
+    // Default to the requested platform-owner email unless overridden by env
+    email: (process.env.ADMIN_EMAIL || "estimateproau2025@gmail.com").toLowerCase(),
   },
 };
 

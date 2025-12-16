@@ -65,7 +65,14 @@ async function updateNotes(req, res) {
 }
 
 async function listAllLeads(req, res) {
-  const leads = await Lead.find()
+  const filter = {};
+  if (req.query.builderId) {
+    filter.builder = req.query.builderId;
+  }
+  if (req.query.status) {
+    filter.status = req.query.status;
+  }
+  const leads = await Lead.find(filter)
     .populate("builder", "businessName email")
     .sort({ createdAt: -1 });
   res.json({ leads });

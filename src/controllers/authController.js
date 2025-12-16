@@ -217,13 +217,27 @@ async function login(req, res) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
+  // Auto-promote the configured admin email to admin role if it exists as a builder
+  if (
+    builder.email === (config.admin.email || "") &&
+    builder.role !== "admin"
+  ) {
+    builder.role = "admin";
+    await builder.save();
+  }
+
   const passwordMatch = await builder.comparePassword(password);
   if (!passwordMatch) {
     return res.status(401).json({ message: "Invalid credentials" });
   }
 
   if (builder.isAccessDisabled) {
-    return res.status(403).json({ message: "Account disabled" });
+    return res
+      .status(403)
+      .json({
+        message:
+          "Your account has been temporarily disabled. Please contact support.",
+      });
   }
 
   const tokens = await issueSessionTokens(builder);

@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const Builder = require("../models/Builder");
 
@@ -10,6 +10,17 @@ const updateProfileValidators = [
 ];
 
 const pricingValidators = [
+  body("pricingMode").optional().isIn(["final", "base"]),
+  body("pricingItems").isArray(),
+  body("pricingItems.*.itemName").notEmpty(),
+  body("pricingItems.*.priceType").isIn(["sqm", "fixed", "percentage"]),
+  body("pricingItems.*.finalPrice").optional().isFloat({ min: 0 }),
+  body("pricingItems.*.baseCost").optional().isFloat({ min: 0 }),
+  body("pricingItems.*.markupPercent").optional().isFloat({ min: 0 }),
+];
+
+const adminPricingValidators = [
+  param("id").isMongoId(),
   body("pricingMode").optional().isIn(["final", "base"]),
   body("pricingItems").isArray(),
   body("pricingItems.*.itemName").notEmpty(),
@@ -76,6 +87,42 @@ async function regenerateSurveyLink(req, res) {
   res.json({ surveySlug: req.user.surveySlug });
 }
 
+async function adminGetBuilder(req, res) {
+  const builder = await Builder.findById(req.params.id).select(
+    "-password -refreshTokens"
+  );
+  if (!builder) {
+    return res.status(404).json({ message: "Builder not found" });
+  }
+  res.json({ builder: formatBuilder(builder) });
+}
+
+async function adminGetPricing(req, res) {
+  const builder = await Builder.findById(req.params.id);
+  if (!builder) {
+    return res.status(404).json({ message: "Builder not found" });
+  }
+  res.json({
+    pricingMode: builder.pricingMode,
+    pricingItems: builder.pricingItems,
+  });
+}
+
+async function adminUpdatePricing(req, res) {
+  const builder = await Builder.findById(req.params.id);
+  if (!builder) {
+    return res.status(404).json({ message: "Builder not found" });
+  }
+  const { pricingMode, pricingItems } = req.body;
+  builder.pricingMode = pricingMode || builder.pricingMode;
+  builder.pricingItems = pricingItems;
+  await builder.save();
+  res.json({
+    pricingMode: builder.pricingMode,
+    pricingItems: builder.pricingItems,
+  });
+}
+
 async function getAllBuilders(req, res) {
   const builders = await Builder.find().select("-password -refreshTokens");
   res.json({ builders });
@@ -84,11 +131,15 @@ async function getAllBuilders(req, res) {
 module.exports = {
   updateProfileValidators,
   pricingValidators,
+  adminPricingValidators,
   getProfile,
   updateProfile,
   getPricing,
   updatePricing,
   regenerateSurveyLink,
   getAllBuilders,
+  adminGetBuilder,
+  adminGetPricing,
+  adminUpdatePricing,
 };
 
