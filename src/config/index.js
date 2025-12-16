@@ -65,7 +65,7 @@ const config = {
   },
   admin: {
     // Default to the requested platform-owner email unless overridden by env
-    email: (process.env.ADMIN_EMAIL || "estimateproau2025@gmail.com").toLowerCase(),
+    email: ("estimateproau2025@gmail.com").toLowerCase(),
   },
 };
 
