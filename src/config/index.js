@@ -6,10 +6,9 @@ dotenv.config({ path: path.join(process.cwd(), ".env") });
 const config = {
   env: process.env.NODE_ENV || "development",
   port: process.env.PORT || 5000,
-  databaseUrl: "mongodb+srv://ehteshambutt58:4G9PFxLyIR6PqGLn@cluster0.mw68zmh.mongodb.net/number_discussion?retryWrites=true&w=majority",
-
-    // process.env.DATABASE_URL ||
-    // process.env.DATABASE_URL || "mongodb+srv://estimateproau2025_db_user:estimatepro@1122@cluster0.mw68zmh.mongodb.net/number_discussion?retryWrites=true&w=majority",
+  databaseUrl:
+    // process.env.DATABASE_URL || "mongodb+srv://ehteshambutt58:4G9PFxLyIR6PqGLn@cluster0.mw68zmh.mongodb.net/number_discussion?retryWrites=true&w=majority",
+    process.env.DATABASE_URL || "mongodb+srv://estimateproau2025_db_user:estimatepro@1122@cluster0.mw68zmh.mongodb.net/number_discussion?retryWrites=true&w=majority",
 
   frontendUrl:
     process.env.FRONTEND_URL ||
