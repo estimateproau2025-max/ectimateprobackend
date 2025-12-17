@@ -16,7 +16,7 @@ const config = {
       ? `https://${process.env.VERCEL_URL}`
       : "https://ectimatepros.vercel.app"),
   allowedOrigins: (
-    process.env.CORS_ALLOW_ORIGINS ||
+    // process.env.CORS_ALLOW_ORIGINS ||
     // "http://localhost:5173,https://ectimatepros.vercel.app"
     "http://localhost:5173,https://ectimatepros.vercel.app,https://estimate-pro-chi.vercel.app"
 
