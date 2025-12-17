@@ -14,7 +14,10 @@ const transporterConfig = config.email.service
   : {
       host: config.email.host,
       port: config.email.port,
-      secure: config.email.port === 465,
+      secure:
+        typeof config.email.secure === "boolean"
+          ? config.email.secure
+          : config.email.port === 465,
       auth: {
         user: config.email.user,
         pass: config.email.pass,
