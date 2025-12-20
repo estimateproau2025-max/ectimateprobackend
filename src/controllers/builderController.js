@@ -45,6 +45,9 @@ function formatBuilder(builder) {
     subscriptionStatus: builder.subscriptionStatus,
     hasPaymentMethod: builder.hasPaymentMethod,
     notifications: builder.notifications,
+    createdAt: builder.createdAt,
+    updatedAt: builder.updatedAt,
+    lastLoginAt: builder.lastLoginAt,
   };
 }
 
